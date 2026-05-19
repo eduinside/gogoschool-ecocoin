@@ -20,7 +20,7 @@ pages_build_output_dir = "./dist"
 [[d1_databases]]
 binding = "DB"
 database_name = "ecoinclass-db"
-database_id = "REPLACE_WITH_D1_DATABASE_ID"
+database_id = "82ec155a-2594-447f-b182-0bb43b3c10af"
 # 로컬 개발: --local 플래그 사용 시 .wrangler/state/v3/d1 에 생성됨
 
 # ----------------------------------------------------------------------------
@@ -28,8 +28,8 @@ database_id = "REPLACE_WITH_D1_DATABASE_ID"
 # ----------------------------------------------------------------------------
 [[kv_namespaces]]
 binding = "SESSIONS"
-id = "REPLACE_WITH_KV_NAMESPACE_ID"
-preview_id = "REPLACE_WITH_KV_PREVIEW_ID"
+id = "bf20421a258b4228b1894968b08d2dba"
+preview_id = "bf20421a258b4228b1894968b08d2dba"
 
 # ----------------------------------------------------------------------------
 # 환경변수 (비-시크릿)
@@ -63,11 +63,11 @@ LOG_RATE_LIMIT_PER_MIN = "60"
 [[env.production.d1_databases]]
 binding = "DB"
 database_name = "ecoinclass-db"
-database_id = "REPLACE_WITH_D1_DATABASE_ID"
+database_id = "82ec155a-2594-447f-b182-0bb43b3c10af"
 
 [[env.production.kv_namespaces]]
 binding = "SESSIONS"
-id = "REPLACE_WITH_KV_NAMESPACE_ID"
+id = "bf20421a258b4228b1894968b08d2dba"
 
 # ----------------------------------------------------------------------------
 # 개발 서버
