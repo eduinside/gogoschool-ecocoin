@@ -38,3 +38,7 @@ Thumbs.db
 coverage/
 playwright-report/
 test-results/
+
+# v1 참고용 소스 (로컬 전용)
+EcoinClass-source/
+EcoinClass-source.zip
