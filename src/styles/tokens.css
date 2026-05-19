@@ -1,0 +1,110 @@
+/* EcoinClass — Design tokens */
+:root {
+  /* Type */
+  --font-display: "Pretendard Variable", "Pretendard", -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Noto Sans KR", sans-serif;
+  --font-body: "Pretendard Variable", "Pretendard", -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Noto Sans KR", sans-serif;
+  --font-num: "SF Pro Rounded", "Pretendard Variable", -apple-system, system-ui, sans-serif;
+
+  /* Neutrals — slightly warm green-tinted whites */
+  --bg: oklch(0.985 0.008 145);
+  --bg-soft: oklch(0.965 0.012 145);
+  --surface: #ffffff;
+  --ink: oklch(0.22 0.02 155);
+  --ink-2: oklch(0.42 0.02 155);
+  --ink-3: oklch(0.58 0.015 155);
+  --line: oklch(0.92 0.01 150);
+  --line-strong: oklch(0.86 0.012 150);
+
+  /* Greens */
+  --leaf: oklch(0.62 0.14 150);
+  --leaf-deep: oklch(0.45 0.12 152);
+  --leaf-soft: oklch(0.94 0.05 145);
+  --leaf-tint: oklch(0.97 0.025 145);
+  --lime: oklch(0.78 0.16 130);
+  --moss: oklch(0.55 0.10 155);
+
+  /* Status accents */
+  --sun: oklch(0.82 0.13 90);
+  --sun-deep: oklch(0.62 0.14 75);
+  --sky: oklch(0.72 0.10 230);
+  --berry: oklch(0.62 0.14 25);
+
+  /* Radii / shadows */
+  --r-sm: 10px;
+  --r-md: 14px;
+  --r-lg: 20px;
+  --r-xl: 28px;
+  --shadow-1: 0 1px 2px rgba(20, 40, 30, 0.04), 0 1px 3px rgba(20, 40, 30, 0.06);
+  --shadow-2: 0 4px 14px rgba(20, 50, 35, 0.07), 0 2px 4px rgba(20, 50, 35, 0.04);
+  --shadow-3: 0 14px 40px rgba(20, 50, 35, 0.10), 0 4px 12px rgba(20, 50, 35, 0.06);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { margin: 0; padding: 0; height: 100%; }
+body {
+  font-family: var(--font-body);
+  color: var(--ink);
+  background: var(--bg);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  line-height: 1.5;
+}
+
+#root { min-height: 100vh; }
+
+.num { font-family: var(--font-num); font-feature-settings: "tnum"; font-variant-numeric: tabular-nums; }
+
+.eco-card {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--r-lg);
+  box-shadow: var(--shadow-1);
+}
+.eco-pill {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 4px 10px; border-radius: 999px;
+  background: var(--leaf-tint); color: var(--leaf-deep);
+  font-size: 12px; font-weight: 600;
+  border: 1px solid color-mix(in oklch, var(--leaf), white 70%);
+}
+.eco-btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+  padding: 12px 18px; border-radius: 14px;
+  background: var(--leaf); color: white;
+  font-weight: 600; font-size: 15px;
+  border: none; cursor: pointer;
+  box-shadow: 0 4px 12px color-mix(in oklch, var(--leaf), transparent 70%);
+  transition: transform 0.1s ease, box-shadow 0.15s ease;
+  font-family: inherit;
+}
+.eco-btn:active { transform: scale(0.98); }
+.eco-btn.ghost {
+  background: transparent; color: var(--leaf-deep);
+  box-shadow: none;
+  border: 1px solid var(--line-strong);
+}
+.eco-btn.subtle {
+  background: var(--leaf-soft); color: var(--leaf-deep);
+  box-shadow: none;
+}
+
+.no-scrollbar::-webkit-scrollbar { display: none; }
+.no-scrollbar { scrollbar-width: none; }
+
+@keyframes coinPop {
+  0%   { transform: scale(0.4); opacity: 0; }
+  50%  { transform: scale(1.15); opacity: 1; }
+  100% { transform: scale(1); opacity: 1; }
+}
+@keyframes leafSway {
+  0%, 100% { transform: rotate(-3deg); }
+  50%      { transform: rotate(3deg); }
+}
+@keyframes shimmer {
+  0%   { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}

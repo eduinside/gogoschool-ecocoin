@@ -1,0 +1,54 @@
+{
+  "name": "ecoinclass",
+  "version": "2.0.0",
+  "private": true,
+  "type": "module",
+  "description": "EcoinClass v2 — 초등학생용 친환경 학급 미시 경제 플랫폼",
+  "scripts": {
+    "dev": "wrangler pages dev --d1=DB --kv=SESSIONS -- npm run dev:vite",
+    "dev:vite": "vite",
+    "build": "vite build",
+    "preview": "wrangler pages dev ./dist",
+    "deploy": "npm run build && wrangler pages deploy ./dist",
+    "db:migrate:local": "wrangler d1 migrations apply ecoinclass-db --local",
+    "db:migrate:remote": "wrangler d1 migrations apply ecoinclass-db --remote",
+    "db:seed:local": "wrangler d1 execute ecoinclass-db --local --file=./migrations/0002_seed.sql",
+    "db:seed:remote": "wrangler d1 execute ecoinclass-db --remote --file=./migrations/0002_seed.sql",
+    "db:reset:local": "rm -rf .wrangler/state/v3/d1 && npm run db:migrate:local && npm run db:seed:local",
+    "db:console:local": "wrangler d1 execute ecoinclass-db --local --command",
+    "db:console:remote": "wrangler d1 execute ecoinclass-db --remote --command",
+    "types": "wrangler types",
+    "test": "vitest",
+    "test:e2e": "playwright test",
+    "lint": "eslint . --ext .ts,.tsx",
+    "format": "prettier --write \"**/*.{ts,tsx,json,md}\"",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "hono": "^4.6.14",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-router-dom": "^6.28.0",
+    "zod": "^3.24.1"
+  },
+  "devDependencies": {
+    "@cloudflare/workers-types": "^4.20250109.0",
+    "@playwright/test": "^1.49.1",
+    "@types/react": "^18.3.18",
+    "@types/react-dom": "^18.3.5",
+    "@typescript-eslint/eslint-plugin": "^8.19.1",
+    "@typescript-eslint/parser": "^8.19.1",
+    "@vitejs/plugin-react": "^4.3.4",
+    "eslint": "^9.17.0",
+    "eslint-plugin-react": "^7.37.3",
+    "eslint-plugin-react-hooks": "^5.1.0",
+    "prettier": "^3.4.2",
+    "typescript": "^5.7.3",
+    "vite": "^6.0.7",
+    "vitest": "^2.1.8",
+    "wrangler": "^3.99.0"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  }
+}

@@ -1,0 +1,77 @@
+# ============================================================================
+# EcoinClass v2 — Cloudflare Pages + Functions 설정
+# ============================================================================
+# 사용 전 체크:
+#   1) `wrangler d1 create ecoinclass-db` 실행 후 출력된 database_id 붙여넣기
+#   2) `wrangler kv:namespace create SESSIONS` 실행 후 id 붙여넣기
+#   3) `wrangler secret put JWT_SECRET` 으로 시크릿 등록 (32자 이상 랜덤)
+#   4) (선택) `wrangler kv:namespace create SESSIONS --preview` → preview_id
+# ============================================================================
+
+name = "ecoinclass"
+compatibility_date = "2025-01-15"
+compatibility_flags = ["nodejs_compat"]
+
+pages_build_output_dir = "./dist"
+
+# ----------------------------------------------------------------------------
+# D1 Database (메인)
+# ----------------------------------------------------------------------------
+[[d1_databases]]
+binding = "DB"
+database_name = "ecoinclass-db"
+database_id = "REPLACE_WITH_D1_DATABASE_ID"
+# 로컬 개발: --local 플래그 사용 시 .wrangler/state/v3/d1 에 생성됨
+
+# ----------------------------------------------------------------------------
+# KV Namespace (refresh tokens, 세션 캐시)
+# ----------------------------------------------------------------------------
+[[kv_namespaces]]
+binding = "SESSIONS"
+id = "REPLACE_WITH_KV_NAMESPACE_ID"
+preview_id = "REPLACE_WITH_KV_PREVIEW_ID"
+
+# ----------------------------------------------------------------------------
+# 환경변수 (비-시크릿)
+# ----------------------------------------------------------------------------
+[vars]
+APP_ENV = "development"
+APP_VERSION = "2.0.0"
+JWT_ISSUER = "ecoinclass"
+JWT_ACCESS_TTL_SEC = "3600"          # 1시간
+JWT_REFRESH_TTL_SEC = "2592000"      # 30일
+LOG_BATCH_MAX_EVENTS = "100"
+LOG_RATE_LIMIT_PER_MIN = "60"
+
+# 시크릿(JWT_SECRET 등)은 `wrangler secret put` 으로 별도 등록 — 본 파일에 적지 마세요.
+
+# ----------------------------------------------------------------------------
+# 프로덕션 환경 오버라이드
+# ----------------------------------------------------------------------------
+[env.production]
+name = "ecoinclass"
+
+[env.production.vars]
+APP_ENV = "production"
+APP_VERSION = "2.0.0"
+JWT_ISSUER = "ecoinclass"
+JWT_ACCESS_TTL_SEC = "3600"
+JWT_REFRESH_TTL_SEC = "2592000"
+LOG_BATCH_MAX_EVENTS = "100"
+LOG_RATE_LIMIT_PER_MIN = "60"
+
+[[env.production.d1_databases]]
+binding = "DB"
+database_name = "ecoinclass-db"
+database_id = "REPLACE_WITH_D1_DATABASE_ID"
+
+[[env.production.kv_namespaces]]
+binding = "SESSIONS"
+id = "REPLACE_WITH_KV_NAMESPACE_ID"
+
+# ----------------------------------------------------------------------------
+# 개발 서버
+# ----------------------------------------------------------------------------
+[dev]
+port = 8788
+local_protocol = "http"
