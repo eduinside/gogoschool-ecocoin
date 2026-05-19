@@ -1,5 +1,6 @@
 import React, { createContext, useContext, useState, useEffect, useCallback } from 'react';
 import { api, setSession, clearSession } from './api';
+import { isDemoMode, getDemoRole, exitDemo, DEMO_STUDENT_USER, DEMO_TEACHER_USER } from './demo';
 
 interface UserProfile {
   id: string;
@@ -69,6 +70,12 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   }, []);
 
   useEffect(() => {
+    if (isDemoMode()) {
+      const role = getDemoRole();
+      setUser(role === 'teacher' ? DEMO_TEACHER_USER : DEMO_STUDENT_USER);
+      setLoading(false);
+      return;
+    }
     const token = localStorage.getItem('ecoin_token');
     if (token) {
       fetchMe().finally(() => setLoading(false));
@@ -107,6 +114,11 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   };
 
   const logout = async () => {
+    if (isDemoMode()) {
+      exitDemo();
+      setUser(null);
+      return;
+    }
     try {
       await api.post('/auth/logout');
     } catch {

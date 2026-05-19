@@ -1,5 +1,6 @@
 import React from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { isDemoMode } from '@/lib/demo';
 import { AuthProvider, useAuth } from '@/lib/auth';
 import { StudentLayout, TeacherLayout } from '@/components/shared/Layout';
 
@@ -32,7 +33,7 @@ function ProtectedRoute({ children, role }: { children: React.ReactNode; role?: 
 function PublicOnly({ children }: { children: React.ReactNode }) {
   const { user, loading, isTeacher } = useAuth();
   if (loading) return null;
-  if (user) return <Navigate to={isTeacher ? '/teacher' : '/student'} replace />;
+  if (user && !isDemoMode()) return <Navigate to={isTeacher ? '/teacher' : '/student'} replace />;
   return <>{children}</>;
 }
 

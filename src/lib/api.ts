@@ -1,3 +1,5 @@
+import { isDemoMode, getDemoPostData } from './demo';
+
 const BASE_URL = '/api';
 
 class ApiError extends Error {
@@ -92,11 +94,16 @@ async function request<T>(method: string, path: string, body?: unknown): Promise
   return json.data as T;
 }
 
+async function demoPost<T>(path: string): Promise<T> {
+  await new Promise((r) => setTimeout(r, 400)); // 실제감을 위한 딜레이
+  return getDemoPostData(path) as T;
+}
+
 export const api = {
   get: <T>(path: string) => request<T>('GET', path),
-  post: <T>(path: string, body?: unknown) => request<T>('POST', path, body),
-  patch: <T>(path: string, body?: unknown) => request<T>('PATCH', path, body),
-  delete: <T>(path: string) => request<T>('DELETE', path),
+  post: <T>(path: string, body?: unknown) => isDemoMode() ? demoPost<T>(path) : request<T>('POST', path, body),
+  patch: <T>(path: string, body?: unknown) => isDemoMode() ? demoPost<T>(path) : request<T>('PATCH', path, body),
+  delete: <T>(path: string) => isDemoMode() ? demoPost<T>(path) : request<T>('DELETE', path),
 };
 
 export { ApiError };
